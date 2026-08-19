@@ -11,8 +11,9 @@ function GuestList({
 }) {
   const filteredPeople = people.filter((person) => {
     const search = searchTerm.toLowerCase();
-    const createdAtText = person.createdAt
-      ? new Date(person.createdAt).toLocaleString().toLowerCase()
+    const entryDate = person.entryDate || person.createdAt;
+    const createdAtText = entryDate
+      ? new Date(entryDate).toLocaleString().toLowerCase()
       : "";
     return (
       person.name?.toLowerCase().includes(search) ||
@@ -224,7 +225,7 @@ function GuestList({
                       </div>
                     )}
 
-                    {person.createdAt && (
+                    {(person.entryDate || person.createdAt) && (
                       <div className="flex items-center gap-2.5 truncate text-slate-400">
                         <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-md bg-slate-100 text-slate-400">
                           <svg
@@ -242,7 +243,7 @@ function GuestList({
                           </svg>
                         </div>
                         <span className="truncate">
-                          Added {formatDateDisplay(person.createdAt)}
+                          Date {formatDateDisplay(person.entryDate || person.createdAt)}
                         </span>
                       </div>
                     )}

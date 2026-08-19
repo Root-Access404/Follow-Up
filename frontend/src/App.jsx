@@ -69,6 +69,7 @@ function App() {
             "Contact No": person.contactNo || "",
             "Location": person.location || "",
             "Invited By": person.invitedBy || "",
+            "Card Date": person.entryDate || person.createdAt || "",
             "Health Challenges": Array.isArray(person.healthChallenges)
                 ? person.healthChallenges.join(", ")
                 : person.healthChallenges || "",
@@ -191,8 +192,9 @@ function App() {
 
     const filteredPeople = people.filter((person) => {
         const search = searchTerm.toLowerCase();
-        const createdAtText = person.createdAt
-            ? new Date(person.createdAt).toLocaleString().toLowerCase()
+        const entryDate = person.entryDate || person.createdAt;
+        const createdAtText = entryDate
+            ? new Date(entryDate).toLocaleString().toLowerCase()
             : "";
 
         return (
@@ -450,7 +452,7 @@ function App() {
 
                             <PersonForm
                                 editingPerson={selectedPerson}
-                                onPersonCreated={async () => {
+                                onPersonUpdated={async () => {
                                     await loadPeople();
 
                                     alert("Guest updated successfully!");

@@ -72,6 +72,11 @@ const personSchema = new mongoose.Schema(
             trim: true
         },
 
+        entryDate: {
+            type: Date,
+            default: Date.now
+        },
+
         healthChallenges: {
             type: [String],
             default: []

@@ -14,6 +14,13 @@ const healthOptions = [
   "children_nutrition",
 ];
 
+const getDateInputValue = (value) => {
+  if (!value) return "";
+
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? "" : date.toISOString().substring(0, 10);
+};
+
 function PersonForm({
   editingPerson = null,
   onPersonCreated,
@@ -24,6 +31,7 @@ function PersonForm({
     contactNo: editingPerson?.contactNo || "",
     location: editingPerson?.location || "",
     status: editingPerson?.status || "known",
+    entryDate: getDateInputValue(editingPerson?.entryDate || editingPerson?.createdAt || new Date()),
     invitedBy: editingPerson?.invitedBy || "",
     healthChallenges: editingPerson?.healthChallenges || [],
     otherHealthProblem: editingPerson?.otherHealthProblem || "",
@@ -102,6 +110,7 @@ function PersonForm({
           contactNo: "",
           location: "",
           status: "known",
+          entryDate: getDateInputValue(new Date()),
           invitedBy: "",
           healthChallenges: [],
           otherHealthProblem: "",
@@ -239,6 +248,20 @@ function PersonForm({
                 <option value="interested">Interested</option>
                 <option value="not_interested">Not Interested</option>
               </select>
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="mb-1.5 block text-[11px] font-bold uppercase tracking-wider text-slate-600">
+                Card Date <span className="text-rose-500">*</span>
+              </label>
+              <input
+                type="date"
+                name="entryDate"
+                value={formData.entryDate}
+                onChange={handleChange}
+                required
+                className="h-10 w-full rounded-xl border border-slate-200 bg-white px-3.5 text-sm text-slate-900 shadow-xs transition duration-150 focus:border-blue-500 focus:ring-3 focus:ring-blue-500/15 focus:outline-none"
+              />
             </div>
           </div>
 
